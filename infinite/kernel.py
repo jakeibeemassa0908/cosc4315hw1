@@ -40,7 +40,7 @@ def __eval_call(call: Call) -> Any:
         evaled_args = [eval_ast(arg) for arg in args]
         return builtins[key](evaled_args)
     else:
-        raise ValueError(f'No such builtin {name}/{arity}.')
+        raise ValueError('No such builtin %s/%d' % (name, arity))
 
 
 def string_to_ast(string: str) -> AST:
