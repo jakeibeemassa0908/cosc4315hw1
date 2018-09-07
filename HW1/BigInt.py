@@ -8,10 +8,10 @@ class BigInt():
         diff = abs(len(list2.list)-len(self.list))
 
         # diferentiate the longer list than the smaller list
-        smallerList,longer_list = (list2.list,self.list) if len(list2.list)<len(self.list) else (self.list,list2.list)
+        smallerList,longerList = (list2.list,self.list) if len(list2.list)<len(self.list) else (self.list,list2.list)
         smallerList = [0]*diff +smallerList
 
-        self.list= list(map(add,smallerList,longer_list))
+        self.list= list(map(add,smallerList,longerList))
 
         for i in reversed(range(1,len(self.list))):
             if self.list[i]>9:
@@ -25,10 +25,31 @@ class BigInt():
         return self
 
 
-    def mutliply(self):
-        return null
+    def multiply(self,list2):
+        sum_lists = []
+        # diferentiate the longer list than the smaller list
+        smallerList,longerList = (list2.list,self.list) if len(list2.list)<len(self.list) else (self.list,list2.list)
+
+        multiplier = 0
+        for i in reversed(range(len(smallerList))):
+            new_list = []
+            carry = 0
+            for j in reversed(range(len(longerList))):
+                numToAdd=(smallerList[i] * longerList[j])+ carry
+                carry = numToAdd//10
+                new_list.append(numToAdd%10)
+            if carry > 0:
+                new_list.append(carry)
+            new_list.reverse()
+            sum_lists.append(new_list+ [0] * multiplier)
+
+            multiplier+=1
+        self.list = sum_lists[0]
+
+        for l in sum_lists[1:]:
+            self.add(BigInt(l))
+
+        return self
 
     def __repr__(self):
         return ''.join(list(map(str,self.list)))
-
-    
