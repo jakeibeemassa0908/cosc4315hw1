@@ -15,15 +15,15 @@ def main():
         line = line.strip()
         if '*' in line:
             values = line.split('*')
-            x = BigInt(values[0])
-            y = BigInt(values[1])
+            x = BigInt.parse(values[0])
+            y = BigInt.parse(values[1])
             x.multiply(y)
             print(line.rstrip('\n') + '=' + str(x))
 
         elif '+' in line:
             values = line.split('+')
-            x = BigInt(values[0])
-            y = BigInt(values[1])
+            x = BigInt.parse(values[0])
+            y = BigInt.parse(values[1])
             x.add(y)
             print(line.rstrip('\n') + '=' + str(x))
 

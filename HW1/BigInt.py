@@ -15,6 +15,16 @@ class BigInt():
         else:
             raise ValueError('Cannot multiply BigInt and %s' % (BigInt))
 
+    @classmethod
+    def parse(cls, string):
+        try:
+            nodes = [int(d) for d in string]
+            bigint = BigInt([])
+            bigint.list = nodes
+            return bigint
+        except:
+            raise ValueError('`string` is not a parseable BigInt.')
+
     def __add_bigint(self, other):
         nodes1 = self.list
         nodes2 = other.list
