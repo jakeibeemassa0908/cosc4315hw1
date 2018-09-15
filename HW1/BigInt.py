@@ -1,7 +1,9 @@
+from functools import reduce
+
 class BigInt():
-    def __init__(self,num,node_size=1):
-        #convert list of string into list of int
-        self.list = list(map(int,num))
+    def __init__(self, nodes, node_size=1):
+        self.nodes = nodes
+        self.node_size = node_size
 
     def add(self, other):
         if isinstance(other, BigInt):
@@ -19,15 +21,13 @@ class BigInt():
     def parse(cls, string):
         try:
             nodes = [int(d) for d in string]
-            bigint = BigInt([])
-            bigint.list = nodes
-            return bigint
+            return BigInt(nodes, 1)
         except:
             raise ValueError('`string` is not a parseable BigInt.')
 
     def __add_bigint(self, other):
-        nodes1 = self.list
-        nodes2 = other.list
+        nodes1 = self.nodes
+        nodes2 = other.nodes
 
         nodes1 = [0] * (len(nodes2) - len(nodes1)) + nodes1
         nodes2 = [0] * (len(nodes1) - len(nodes2)) + nodes2
@@ -36,13 +36,13 @@ class BigInt():
         added = [a + b for (a, b) in zipped]
         normalized = _nodes_normalize(added)
 
-        self.list = normalized
+        self.nodes = normalized
 
         return self
 
     def __mul_bigint(self, other):
-        nodes1 = self.list
-        nodes2 = other.list
+        nodes1 = self.nodes
+        nodes2 = other.nodes
 
         # We multiply each node with a list of nodes.
         multiplied = [[a * b for b in nodes2] for a in nodes1]
@@ -52,12 +52,12 @@ class BigInt():
         biginted = [BigInt(nodes) for nodes in padded]
         summed = reduce(lambda bigint, acc: acc.add(bigint), biginted)
 
-        self.list = summed.list
+        self.nodes = summed.nodes
 
         return self
 
     def __repr__(self):
-        return ''.join(list(map(str,self.list)))
+        return ''.join(str(node) for node in self.nodes)
 
 
 def _nodes_normalize(nodes, carry=0, acc=[]):
