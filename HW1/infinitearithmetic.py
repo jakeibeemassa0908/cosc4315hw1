@@ -6,7 +6,7 @@ import os
 from BigInt import BigInt
 
 
-def infinitearithmetic():
+def main():
     path = os.path.join(os.path.dirname(__file__), 'input.txt')
     with open(path) as f:
         lines = f.readlines()
@@ -27,5 +27,5 @@ def infinitearithmetic():
             x.add(y)
             print(line.rstrip('\n') + '=' + str(x))
 
-
-infinitearithmetic()
+if __name__ == '__main__':
+    main()
