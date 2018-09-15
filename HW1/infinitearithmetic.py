@@ -17,15 +17,15 @@ def main():
             values = line.split('*')
             x = BigInt.parse(values[0])
             y = BigInt.parse(values[1])
-            x.multiply(y)
-            print(line.rstrip('\n') + '=' + str(x))
+            result = x * y
+            print(line.rstrip('\n') + '=' + str(result))
 
         elif '+' in line:
             values = line.split('+')
             x = BigInt.parse(values[0])
             y = BigInt.parse(values[1])
-            x.add(y)
-            print(line.rstrip('\n') + '=' + str(x))
+            result = x + y
+            print(line.rstrip('\n') + '=' + str(result))
 
 if __name__ == '__main__':
     main()

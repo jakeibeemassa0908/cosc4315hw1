@@ -5,13 +5,13 @@ class BigInt():
         self.nodes = nodes
         self.node_size = node_size
 
-    def add(self, other):
+    def __add__(self, other):
         if isinstance(other, BigInt):
             return self.__add_bigint(other)
         else:
             raise ValueError('Cannot add BigInt and %s' % (BigInt))
 
-    def multiply(self, other):
+    def __mul__(self, other):
         if isinstance(other, BigInt):
             return self.__mul_bigint(other)
         else:
@@ -48,7 +48,7 @@ class BigInt():
         padded = [a + [0] * (len(multiplied) - i)
                   for i, a in enumerate(multiplied, 1)]
         biginted = [BigInt(nodes) for nodes in padded]
-        summed = reduce(lambda bigint, acc: acc.add(bigint), biginted)
+        summed = reduce(lambda i, acc: i + acc, biginted)
 
         return summed
 
