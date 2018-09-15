@@ -27,5 +27,6 @@ def main():
             result = x + y
             print(line.rstrip('\n') + '=' + str(result))
 
+
 if __name__ == '__main__':
     main()
