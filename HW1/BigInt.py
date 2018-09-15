@@ -9,6 +9,12 @@ class BigInt():
         else:
             raise ValueError('Cannot add BigInt and %s' % (BigInt))
 
+    def multiply(self, other):
+        if isinstance(other, BigInt):
+            return self.__mul_bigint(other)
+        else:
+            raise ValueError('Cannot multiply BigInt and %s' % (BigInt))
+
     def __add_bigint(self, other):
         nodes1 = self.list
         nodes2 = other.list
@@ -24,29 +30,19 @@ class BigInt():
 
         return self
 
-    def multiply(self,list2):
-        sum_lists = []
-        # diferentiate the longer list than the smaller list
-        smallerList,longerList = (list2.list,self.list) if len(list2.list)<len(self.list) else (self.list,list2.list)
+    def __mul_bigint(self, other):
+        nodes1 = self.list
+        nodes2 = other.list
 
-        multiplier = 0
-        for i in reversed(range(len(smallerList))):
-            new_list = []
-            carry = 0
-            for j in reversed(range(len(longerList))):
-                numToAdd=(smallerList[i] * longerList[j])+ carry
-                carry = numToAdd//10
-                new_list.append(numToAdd%10)
-            if carry > 0:
-                new_list.append(carry)
-            new_list.reverse()
-            sum_lists.append(new_list+ [0] * multiplier)
+        # We multiply each node with a list of nodes.
+        multiplied = [[a * b for b in nodes2] for a in nodes1]
+        # We then pad extra 0s based on digit position
+        padded = [a + [0] * (len(multiplied) - i)
+                  for i, a in enumerate(multiplied, 1)]
+        biginted = [BigInt(nodes) for nodes in padded]
+        summed = reduce(lambda bigint, acc: acc.add(bigint), biginted)
 
-            multiplier+=1
-        self.list = sum_lists[0]
-
-        for l in sum_lists[1:]:
-            self.add(BigInt(l))
+        self.list = summed.list
 
         return self
 
