@@ -1,4 +1,3 @@
-from operator import add
 class BigInt():
     def __init__(self,num,node_size=1):
         #convert list of string into list of int
@@ -10,14 +9,17 @@ class BigInt():
         else:
             raise ValueError('Cannot add BigInt and %s' % (BigInt))
 
-    def __add_bigint(self,list2):
-        diff = abs(len(list2.list)-len(self.list))
+    def __add_bigint(self, other):
+        nodes1 = self.list
+        nodes2 = other.list
 
-        # diferentiate the longer list than the smaller list
-        smallerList,longerList = (list2.list,self.list) if len(list2.list)<len(self.list) else (self.list,list2.list)
-        smallerList = [0]*diff +smallerList
+        nodes1 = [0] * (len(nodes2) - len(nodes1)) + nodes1
+        nodes2 = [0] * (len(nodes1) - len(nodes2)) + nodes2
 
-        self.list= list(map(add,smallerList,longerList))
+        zipped = [pair for pair in zip(nodes1, nodes2)]
+        added = [a + b for (a, b) in zipped]
+
+        self.list = added
 
         for i in reversed(range(1,len(self.list))):
             if self.list[i]>9:
