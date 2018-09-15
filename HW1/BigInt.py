@@ -4,7 +4,13 @@ class BigInt():
         #convert list of string into list of int
         self.list = list(map(int,num))
 
-    def add(self,list2):
+    def add(self, other):
+        if isinstance(other, BigInt):
+            return self.__add_bigint(other)
+        else:
+            raise ValueError('Cannot add BigInt and %s' % (BigInt))
+
+    def __add_bigint(self,list2):
         diff = abs(len(list2.list)-len(self.list))
 
         # diferentiate the longer list than the smaller list
