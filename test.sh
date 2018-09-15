@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-python3 ./infinite "input=./tests/test01.txt;digitsPerNode=5"
+python3 ./HW1/infinitearithmetic.py "input=./tests/test01.txt;digitsPerNode=5"
