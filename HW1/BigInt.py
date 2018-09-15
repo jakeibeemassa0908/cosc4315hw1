@@ -18,20 +18,11 @@ class BigInt():
 
         zipped = [pair for pair in zip(nodes1, nodes2)]
         added = [a + b for (a, b) in zipped]
+        normalized = _nodes_normalize(added)
 
-        self.list = added
+        self.list = normalized
 
-        for i in reversed(range(1,len(self.list))):
-            if self.list[i]>9:
-                self.list[i] -=10
-                self.list[i-1] +=1
-
-        if self.list[0]>9:
-            self.list[0]-=10
-            self.list = [1]+self.list
-        
         return self
-
 
     def multiply(self,list2):
         sum_lists = []
@@ -61,3 +52,16 @@ class BigInt():
 
     def __repr__(self):
         return ''.join(list(map(str,self.list)))
+
+
+def _nodes_normalize(nodes, carry=0, acc=[]):
+    if not nodes:
+        if carry > 0:
+            return [carry] + acc
+        else:
+            return acc
+    else:
+        num = nodes[-1] + carry
+        new_num = num % 10
+        new_carry = num // 10
+        return _nodes_normalize(nodes[:-1], new_carry, [new_num] + acc)
