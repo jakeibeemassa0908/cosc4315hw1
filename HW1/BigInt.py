@@ -36,9 +36,7 @@ class BigInt():
         added = [a + b for (a, b) in zipped]
         normalized = _nodes_normalize(added)
 
-        self.nodes = normalized
-
-        return self
+        return BigInt(normalized, self.node_size)
 
     def __mul_bigint(self, other):
         nodes1 = self.nodes
@@ -52,9 +50,7 @@ class BigInt():
         biginted = [BigInt(nodes) for nodes in padded]
         summed = reduce(lambda bigint, acc: acc.add(bigint), biginted)
 
-        self.nodes = summed.nodes
-
-        return self
+        return summed
 
     def __repr__(self):
         return ''.join(str(node) for node in self.nodes)
