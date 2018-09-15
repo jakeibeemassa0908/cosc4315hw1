@@ -1,8 +1,11 @@
-import os
-from BigInt import BigInt
 """
 Without recursion
 """
+
+import os
+from BigInt import BigInt
+
+
 def infinitearithmetic():
     path = os.path.join(os.path.dirname(__file__),'input.txt')
     with open(path)as f:
