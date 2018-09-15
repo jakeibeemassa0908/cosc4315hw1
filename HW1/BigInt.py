@@ -54,7 +54,10 @@ class BigInt():
         return summed
 
     def __repr__(self):
-        return ''.join(str(node) for node in self.nodes)
+        if not self.nodes:
+            return '0'
+        else:
+            return ''.join(str(node) for node in self.nodes)
 
 
 def _nodes_normalize(nodes, carry=0, acc=[]):
