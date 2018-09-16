@@ -9,6 +9,8 @@ class BigInt():
     def __add__(self, other):
         if isinstance(other, BigInt):
             return self.__add_bigint(other)
+        elif isinstance(other, int):
+            return self + BigInt.fromint(other)
         else:
             raise ValueError('Cannot add BigInt and %s' % (BigInt))
 
@@ -18,6 +20,9 @@ class BigInt():
         else:
             raise ValueError('Cannot multiply BigInt and %s' % (BigInt))
 
+    def __radd__(self, other):
+        return self + other
+
     @classmethod
     def parse(cls, string):
         try:
@@ -25,6 +30,10 @@ class BigInt():
             return BigInt(nodes, 1)
         except:
             raise ValueError('`string` is not a parseable BigInt.')
+
+    @classmethod
+    def fromint(cls, integer):
+        return cls.parse(str(integer))
 
     def __add_bigint(self, other):
         nodes1 = self.nodes
@@ -49,7 +58,7 @@ class BigInt():
         padded = [a + [0] * (len(multiplied) - i)
                   for i, a in enumerate(multiplied, 1)]
         biginted = [BigInt(nodes) for nodes in padded]
-        summed = reduce(lambda i, acc: i + acc, biginted)
+        summed = sum(biginted)
 
         return summed
 
