@@ -30,6 +30,11 @@ def main():
         sys.stderr.write('Exiting with code (3)\n')
         sys.exit(3)
 
+    status = run_infinitearithmetic(input_path, digits)
+    sys.exit(status)
+
+
+def run_infinitearithmetic(input_path, digits_per_node):
     inputfile = open(input_path)
     lines = [line.strip() for line in inputfile]
 
@@ -48,7 +53,7 @@ def main():
             result = x + y
             print(line.rstrip('\n') + '=' + str(result))
 
-    sys.exit(None)
+    return 0
 
 
 def __parse_args(string: str) -> Dict[str, str]:
