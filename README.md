@@ -1,6 +1,6 @@
 # cosc4315hw1
 
-An AST approach to cosc4315's homework 1.
+A python implementation of cosc4315's homework 1.
 
 ## Setup
 
