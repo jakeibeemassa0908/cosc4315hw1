@@ -38,24 +38,29 @@ def main():
 
 def run_infinitearithmetic(input_path, digits_per_node):
     inputfile = open(input_path)
-    lines = [line.strip() for line in inputfile]
+    exprs = [line.strip() for line in inputfile]
+    result_pairs = [(e, eval_expression(e, digits_per_node)) for e in exprs]
+    equations = ['%s=%s' % (e, result) for e, result in result_pairs]
+    output = '\n'.join(equations)
 
-    for line in lines:
-        if '*' in line:
-            values = line.split('*')
-            x = BigInt.parse(values[0], digits_per_node)
-            y = BigInt.parse(values[1], digits_per_node)
-            result = x * y
-            print(line.rstrip('\n') + '=' + str(result))
-
-        elif '+' in line:
-            values = line.split('+')
-            x = BigInt.parse(values[0], digits_per_node)
-            y = BigInt.parse(values[1], digits_per_node)
-            result = x + y
-            print(line.rstrip('\n') + '=' + str(result))
+    print(output)
 
     return 0
+
+
+def eval_expression(expr, digits_per_node):
+    expr = expr.strip()
+    if '*' in expr:
+        values = expr.split('*')
+        x = BigInt.parse(values[0], digits_per_node)
+        y = BigInt.parse(values[1], digits_per_node)
+        return x * y
+
+    elif '+' in expr:
+        values = expr.split('+')
+        x = BigInt.parse(values[0], digits_per_node)
+        y = BigInt.parse(values[1], digits_per_node)
+        return x + y
 
 
 def __parse_args(string: str) -> Dict[str, str]:
