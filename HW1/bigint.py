@@ -23,8 +23,10 @@ class BigInt():
     @classmethod
     def parse(cls, string, digits_per_node=1):
         try:
-            nodes = [int(d) for d in string]
-            return BigInt(nodes=nodes, node_size=digits_per_node)
+            chunked = _chunk_digits(string, digits_per_node)
+            nodes = [int(node) for node in chunked]
+            normalized = _nodes_normalize(nodes, digits_per_node)
+            return BigInt(nodes=normalized, node_size=digits_per_node)
         except:
             raise ValueError('`string` is not a parseable BigInt.')
 
@@ -41,7 +43,7 @@ class BigInt():
 
         zipped = [pair for pair in zip(nodes1, nodes2)]
         added = [a + b for (a, b) in zipped]
-        normalized = _nodes_normalize(added)
+        normalized = _nodes_normalize(added, self.node_size)
 
         return BigInt(nodes=normalized, node_size=self.node_size)
 
@@ -63,17 +65,27 @@ class BigInt():
         if not self.nodes:
             return '0'
         else:
-            return ''.join(str(node) for node in self.nodes)
+            stringified = [str(node) for node in self.nodes]
+            padded = stringified[:1] + \
+                [d.zfill(self.node_size) for d in stringified[1:]]
+            return ''.join(padded)
 
 
-def _nodes_normalize(nodes, carry=0, acc=[]):
+def _chunk_digits(string, node_size, acc=[]):
+    if not string:
+        return acc
+    else:
+        return _chunk_digits(string[:-node_size], node_size, [string[-node_size:]] + acc)
+
+
+def _nodes_normalize(nodes, node_size, carry=0, acc=[]):
     if not nodes:
         if carry > 0:
-            return [carry] + acc
+            return _nodes_normalize([carry], node_size, 0, acc)
         else:
             return acc
     else:
         num = nodes[-1] + carry
-        new_num = num % 10
-        new_carry = num // 10
-        return _nodes_normalize(nodes[:-1], new_carry, [new_num] + acc)
+        new_num = num % (10 ** node_size)
+        new_carry = num // (10 ** node_size)
+        return _nodes_normalize(nodes[:-1], node_size, new_carry, [new_num] + acc)
