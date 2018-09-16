@@ -6,7 +6,7 @@ import os
 import sys
 from typing import Dict
 
-from BigInt import BigInt
+from bigint import BigInt
 
 
 def main():
