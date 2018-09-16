@@ -39,8 +39,9 @@ def main():
 
 
 def run_infinitearithmetic(input_path, digits_per_node):
-    inputfile = open(input_path)
-    exprs = [line.strip() for line in inputfile]
+    with open(input_path) as inputfile:
+        exprs = [line.strip() for line in inputfile]
+
     result_pairs = [(e, eval_expression(e, digits_per_node)) for e in exprs]
     equations = ['%s=%s' % (e, result) for e, result in result_pairs]
     output = '\n'.join(equations)
