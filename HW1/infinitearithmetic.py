@@ -32,8 +32,10 @@ def main():
 
     digits_per_node = int(digits)
 
-    status = run_infinitearithmetic(input_path, digits_per_node)
-    sys.exit(status)
+    output = run_infinitearithmetic(input_path, digits_per_node)
+    print(output)
+
+    sys.exit(None)
 
 
 def run_infinitearithmetic(input_path, digits_per_node):
@@ -43,9 +45,7 @@ def run_infinitearithmetic(input_path, digits_per_node):
     equations = ['%s=%s' % (e, result) for e, result in result_pairs]
     output = '\n'.join(equations)
 
-    print(output)
-
-    return 0
+    return output
 
 
 def eval_expression(expr, digits_per_node):
