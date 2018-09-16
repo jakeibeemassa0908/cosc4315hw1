@@ -1,7 +1,7 @@
 class BigInt():
-    def __init__(self, nodes, node_size=1):
-        self.nodes = nodes
-        self.node_size = node_size
+    def __init__(self, **kwargs):
+        self.nodes = kwargs.get('nodes', [0])
+        self.node_size = kwargs.get('node_size', 1)
 
     def __add__(self, other):
         if isinstance(other, BigInt):
@@ -21,16 +21,16 @@ class BigInt():
         return self + other
 
     @classmethod
-    def parse(cls, string):
+    def parse(cls, string, digits_per_node=1):
         try:
             nodes = [int(d) for d in string]
-            return BigInt(nodes, 1)
+            return BigInt(nodes=nodes, node_size=digits_per_node)
         except:
             raise ValueError('`string` is not a parseable BigInt.')
 
     @classmethod
-    def fromint(cls, integer):
-        return cls.parse(str(integer))
+    def fromint(cls, integer, digits_per_node=1):
+        return cls.parse(str(integer), digits_per_node)
 
     def __add_bigint(self, other):
         nodes1 = self.nodes
@@ -43,7 +43,7 @@ class BigInt():
         added = [a + b for (a, b) in zipped]
         normalized = _nodes_normalize(added)
 
-        return BigInt(normalized, self.node_size)
+        return BigInt(nodes=normalized, node_size=self.node_size)
 
     def __mul_bigint(self, other):
         nodes1 = self.nodes
@@ -54,7 +54,7 @@ class BigInt():
         # We then pad extra 0s based on digit position
         padded = [a + [0] * (len(multiplied) - i)
                   for i, a in enumerate(multiplied, 1)]
-        biginted = [BigInt(nodes) for nodes in padded]
+        biginted = [BigInt(nodes=nodes, node_size=self.node_size) for nodes in padded]
         summed = sum(biginted)
 
         return summed

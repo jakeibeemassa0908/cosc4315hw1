@@ -30,7 +30,9 @@ def main():
         sys.stderr.write('Exiting with code (3)\n')
         sys.exit(3)
 
-    status = run_infinitearithmetic(input_path, digits)
+    digits_per_node = int(digits)
+
+    status = run_infinitearithmetic(input_path, digits_per_node)
     sys.exit(status)
 
 
@@ -41,15 +43,15 @@ def run_infinitearithmetic(input_path, digits_per_node):
     for line in lines:
         if '*' in line:
             values = line.split('*')
-            x = BigInt.parse(values[0])
-            y = BigInt.parse(values[1])
+            x = BigInt.parse(values[0], digits_per_node)
+            y = BigInt.parse(values[1], digits_per_node)
             result = x * y
             print(line.rstrip('\n') + '=' + str(result))
 
         elif '+' in line:
             values = line.split('+')
-            x = BigInt.parse(values[0])
-            y = BigInt.parse(values[1])
+            x = BigInt.parse(values[0], digits_per_node)
+            y = BigInt.parse(values[1], digits_per_node)
             result = x + y
             print(line.rstrip('\n') + '=' + str(result))
 
