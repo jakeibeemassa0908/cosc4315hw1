@@ -9,13 +9,15 @@ class BigInt():
         elif isinstance(other, int):
             return self + BigInt.fromint(other)
         else:
-            raise ValueError('Cannot add BigInt and %s' % (other.__class__.__name__))
+            raise ValueError('Cannot add BigInt and %s' %
+                             (other.__class__.__name__))
 
     def __mul__(self, other):
         if isinstance(other, BigInt):
             return self.__mul_bigint(other)
         else:
-            raise ValueError('Cannot multiply BigInt and %s' % (other.__class__.__name__))
+            raise ValueError('Cannot multiply BigInt and %s' %
+                             (other.__class__.__name__))
 
     def __radd__(self, other):
         return self + other
@@ -56,7 +58,8 @@ class BigInt():
         # We then pad extra 0s based on digit position
         padded = [a + [0] * (len(multiplied) - i)
                   for i, a in enumerate(multiplied, 1)]
-        biginted = [BigInt(nodes=nodes, node_size=self.node_size) for nodes in padded]
+        biginted = [BigInt(nodes=nodes, node_size=self.node_size)
+                    for nodes in padded]
         summed = sum(biginted)
 
         return summed
