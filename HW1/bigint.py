@@ -12,13 +12,13 @@ class BigInt():
         elif isinstance(other, int):
             return self + BigInt.fromint(other)
         else:
-            raise ValueError('Cannot add BigInt and %s' % (BigInt))
+            raise ValueError('Cannot add BigInt and %s' % (other.__class__.__name__))
 
     def __mul__(self, other):
         if isinstance(other, BigInt):
             return self.__mul_bigint(other)
         else:
-            raise ValueError('Cannot multiply BigInt and %s' % (BigInt))
+            raise ValueError('Cannot multiply BigInt and %s' % (other.__class__.__name__))
 
     def __radd__(self, other):
         return self + other
