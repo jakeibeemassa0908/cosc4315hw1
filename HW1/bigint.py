@@ -1,6 +1,3 @@
-from functools import reduce
-
-
 class BigInt():
     def __init__(self, nodes, node_size=1):
         self.nodes = nodes
