@@ -36,3 +36,15 @@ def isbigint(value):
 
 def new(nodesize, nodes):
     return ('bigint', nodesize, nodes)
+
+
+def tostring(bigint):
+    nodes = bigint[2]
+    if not nodes:
+        return '0'
+    else:
+        nodesize = bigint[1]
+        stringified = [str(n) for n in nodes]
+        padded = [n.zfill(nodesize)
+                  for n in stringified[:-1]] + stringified[-1:]
+        return ''.join(reversed(padded))
