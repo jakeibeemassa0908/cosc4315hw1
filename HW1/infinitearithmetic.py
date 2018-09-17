@@ -43,8 +43,9 @@ def run_infinitearithmetic(input_path, digits_per_node):
         exprs = [line.strip() for line in inputfile]
 
     result_pairs = [(e, eval_expression(e, digits_per_node)) for e in exprs]
-    equations = ['%s=%s' % (e, result) for e, result in result_pairs]
-    output = '\n'.join(equations)
+    equations = [(e, result) for e, result in result_pairs if result]
+    formatted = ['%s=%s' % (e, result) for e, result in equations]
+    output = '\n'.join(formatted)
 
     return output
 
@@ -63,6 +64,8 @@ def eval_expression(expr, digits_per_node):
         y = BigInt.parse(values[1], digits_per_node)
         return x + y
 
+    else:
+        return None
 
 def __parse_args(string: str) -> Dict[str, str]:
     args = [s.strip() for s in string.split(';')]
