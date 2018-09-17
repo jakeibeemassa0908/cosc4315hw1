@@ -1,3 +1,5 @@
+from functools import reduce
+
 class BigInt():
     def __init__(self, **kwargs):
         self.nodes = kwargs.get('nodes', [0])
@@ -54,7 +56,7 @@ class BigInt():
         nodes2 = other.nodes
 
         # We multiply each node with a list of nodes.
-        multiplied = [[a * b for b in nodes2] for a in nodes1]
+        multiplied = [[reduce(lambda acc, _: acc + b, range(a), 0) for b in nodes2] for a in nodes1]
         # We then pad extra 0s based on digit position
         padded = [a + [0] * (len(multiplied) - i)
                   for i, a in enumerate(multiplied, 1)]
