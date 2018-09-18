@@ -38,6 +38,24 @@ def new(nodesize, nodes):
     return ('bigint', nodesize, nodes)
 
 
+def parse(string, nodesize=1):
+    try:
+        flipped = string[::-1]
+        chunked = __chunkevery(flipped, nodesize)
+        nodes = [int(n) for n in chunked]
+        nodes = __nodes_normalize(nodes, nodesize)
+        return new(nodesize, nodes)
+    except:
+        raise ValueError('`string` is not a parseable bigint.')
+
+
+def __chunkevery(iterable, count, acc=[]):
+    if not iterable:
+        return acc
+    else:
+        return __chunkevery(iterable[count:], count, acc + [iterable[:count]])
+
+
 def tostring(bigint):
     nodes = bigint[2]
     if not nodes:
