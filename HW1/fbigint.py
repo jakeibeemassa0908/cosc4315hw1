@@ -46,7 +46,8 @@ def parse(string, nodesize=1):
     try:
         flipped = string[::-1]
         chunked = __chunkevery(flipped, nodesize)
-        nodes = [int(n) for n in chunked]
+        reverted = [n[::-1] for n in chunked]
+        nodes = [int(n) for n in reverted]
         nodes = __nodes_normalize(nodes, nodesize)
         return new(nodesize, nodes)
     except:
