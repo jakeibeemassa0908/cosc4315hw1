@@ -6,7 +6,7 @@ import os
 import sys
 from typing import Dict
 
-from .bigint import BigInt
+from . import fbigint as bigint
 
 
 def main():
@@ -44,7 +44,7 @@ def run_infinitearithmetic(input_path, digits_per_node):
 
     result_pairs = [(e, eval_expression(e, digits_per_node)) for e in exprs]
     equations = [(e, result) for e, result in result_pairs if result]
-    formatted = ['%s=%s' % (e, result) for e, result in equations]
+    formatted = ['%s=%s' % (e, bigint.tostring(result)) for e, result in equations]
     output = '\n'.join(formatted)
 
     return output
@@ -54,15 +54,15 @@ def eval_expression(expr, digits_per_node):
     expr = expr.strip()
     if '*' in expr:
         values = expr.split('*')
-        x = BigInt.parse(values[0], digits_per_node)
-        y = BigInt.parse(values[1], digits_per_node)
-        return x * y
+        x = bigint.parse(values[0], digits_per_node)
+        y = bigint.parse(values[1], digits_per_node)
+        return bigint.multiply(x, y)
 
     elif '+' in expr:
         values = expr.split('+')
-        x = BigInt.parse(values[0], digits_per_node)
-        y = BigInt.parse(values[1], digits_per_node)
-        return x + y
+        x = bigint.parse(values[0], digits_per_node)
+        y = bigint.parse(values[1], digits_per_node)
+        return bigint.add(x, y)
 
     else:
         return None
