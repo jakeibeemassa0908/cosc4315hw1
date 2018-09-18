@@ -30,6 +30,10 @@ def __nodes_normalize(nodes, nodesize, carry=0, acc=[]):
         return __nodes_normalize(rest, nodesize, new_carry, acc + [new_num])
 
 
+def fromint(integer, nodesize=1):
+    return parse(str(integer), nodesize)
+
+
 def isbigint(value):
     return isinstance(value, tuple) and len(value) == 3 and value[0] == 'bigint'
 
