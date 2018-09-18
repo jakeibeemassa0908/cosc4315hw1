@@ -7,8 +7,8 @@ def add(bigint1, bigint2):
     nodes2 = bigint2[2]
     new_nodesize = bigint1[1]
 
-    nodes1 += [0] * (len(nodes2) - len(nodes1))
-    nodes2 += [0] * (len(nodes1) - len(nodes2))
+    nodes1 = nodes1 + [0] * (len(nodes2) - len(nodes1))
+    nodes2 = nodes2 + [0] * (len(nodes1) - len(nodes2))
 
     added = [a + b for a, b in zip(nodes1, nodes2)]
     normalized = __nodes_normalize(added, new_nodesize)
