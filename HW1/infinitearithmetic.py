@@ -6,7 +6,7 @@ import os
 import sys
 from typing import Dict
 
-from . import bigint
+import bigint
 
 
 def main():
@@ -52,7 +52,7 @@ def run_infinitearithmetic(input_path, digits_per_node):
 
 
 def eval_expression(expr, digits_per_node):
-    expr = expr.strip()
+    expr = expr.strip().replace(" ","")
     if '*' in expr:
         values = expr.split('*')
         x = bigint.parse(values[0], digits_per_node)
